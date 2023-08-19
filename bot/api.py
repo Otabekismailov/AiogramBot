@@ -1,7 +1,7 @@
 import requests
 import json
 
-base_url = "http://localhost:8000/api/"
+base_url = "http://localhost:8000/api"
 
 
 def user_create(username, name, user_id):
@@ -10,6 +10,7 @@ def user_create(username, name, user_id):
     data = json.loads(response)
     user_exist = False
     for i in data:
+        print(i)
         if i["user_id"] == user_id:
             user_exist = True
             return "User is exist"
