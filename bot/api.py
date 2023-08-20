@@ -8,7 +8,6 @@ def user_create(username, name, user_id):
     url = f"{base_url}/user-create/"
     get = requests.get(url).text
     date = json.loads(get)
-    print(date)
     user_exist = False
     if date[0]["chat_id"] == user_id:
         user_exist = True
@@ -19,6 +18,3 @@ def user_create(username, name, user_id):
             return "Create User"
         else:
             return "Error creating user"
-
-
-print(user_create("Otabeek", "Otabeek", 1222233))
