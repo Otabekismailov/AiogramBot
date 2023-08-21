@@ -11,18 +11,18 @@ class BaseModel(models.Model):
 
 
 class AccountManager(BaseUserManager):
-    def create_user(self, user_id, password=None, **extra_fields):
-        if user_id is None:
+    def create_user(self, chat_id, password=None, **extra_fields):
+        if chat_id is None:
             raise TypeError('Username did not come')
-        user = self.model(username=user_id, **extra_fields)
+        user = self.model(chat_id=chat_id, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password=None, **extra_fields):
+    def create_superuser(self, chat_id, password=None, **extra_fields):
         if not password:
             raise TypeError('Password did not come')
-        user = self.create_user(username=username, password=password, **extra_fields)
+        user = self.create_user(chat_id=chat_id, password=password, **extra_fields)
         user.is_superuser = True
         user.is_staff = True
         user.is_active = True
