@@ -33,14 +33,11 @@ class CategorySerializers(serializers.ModelSerializer):
 
 
 class CategoryParentSerializers(serializers.ModelSerializer):
-    children = serializers.SerializerMethodField()
 
-    def get_children(self, obj):
-        return obj.child.values('id', 'name')
 
     class Meta:
         model = Category
-        fields = ("id", "name", 'children')
+        fields = ("id", "name",)
 
 
 class CommitSerializers(serializers.ModelSerializer):

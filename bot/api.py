@@ -27,4 +27,15 @@ def get_category():
     return json.loads(response.text)
 
 
+def get_category_parent(category_id):
+    url = f"{base_url}/category-parent-list/{category_id}/"
+    response = requests.get(url)
+    response.raise_for_status()
+    return json.loads(response.text)
 
+
+def get_course_video(course_id):
+    url = f"{base_url}/course-list/{course_id}/"
+    response = requests.get(url)
+    response.raise_for_status()
+    return json.loads(response.text)

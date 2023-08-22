@@ -16,10 +16,13 @@ class CategoryListApi(ListAPIView):
     serializer_class = CategorySerializers
 
 
-class CategoryParent(generics.RetrieveAPIView):
+class CategoryParent(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryParentSerializers
-    lookup_field = "pk"
+
+    def get_queryset(self):
+        qs = self.queryset.filter(parent_id=self.kwargs.get("pk"))
+        return qs
 
 
 class CommitCreateList(ListCreateAPIView):
@@ -27,9 +30,8 @@ class CommitCreateList(ListCreateAPIView):
     serializer_class = CommitSerializers
 
 
-class CourseList(generics.RetrieveAPIView):
+class CourseList(generics.ListAPIView):
     serializer_class = CourseSerializers
-    lookup_field = "pk"
 
     def get_queryset(self):
         return DjangoCourse.objects.filter(category_id=self.kwargs.get("pk"))
