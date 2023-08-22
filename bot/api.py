@@ -1,7 +1,7 @@
 import requests
 import json
 
-base_url = "http://localhost:8000/api"
+base_url = "http://localhost:8000"
 
 
 def user_create(username, name, user_id):
@@ -18,3 +18,13 @@ def user_create(username, name, user_id):
             return "Create User"
         else:
             return "Error creating user"
+
+
+def get_category():
+    url = f"{base_url}/category-list/"
+    response = requests.get(url)
+    response.raise_for_status()
+    return json.loads(response.text)
+
+
+

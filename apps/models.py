@@ -49,18 +49,37 @@ class User(AbstractBaseUser):
     def __str__(self):
         return f'{self.first_name} | {self.username}'
 
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
+
+
+class Category(BaseModel):
+    name = models.CharField(max_length=100, unique=True)
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, related_name="child", blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
 
 class DjangoCourse(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="django")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     title = models.CharField(max_length=255, null=True, blank=True, unique=True)
-    video = models.FileField(upload_to='videos/')
+    category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name='category')
 
     def __str__(self):
         return f'{self.title}'
 
 
+class CourseVideo(BaseModel):
+    video = models.FileField(upload_to="videos/")
+    course = models.ForeignKey("DjangoCourse", on_delete=models.CASCADE, related_name="course_video")
+
+
 class Commit(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="commit")
+    user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="commit")
     description = models.CharField(max_length=255)
 
     def __str__(self):
