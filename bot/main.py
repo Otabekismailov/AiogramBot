@@ -44,11 +44,10 @@ async def course_category_parent(callback_query: types.CallbackQuery):
 async def course_video(callback_query: types.CallbackQuery):
     course_id = callback_query.data.split('_')[1]
     data = get_course_video(course_id)
-    media = types.MediaGroup()
     for i in data:
-        media.attach_video(i['course_video'][0]['video'])
-    print(media)
-    await callback_query.bot.send_media_group(chat_id=callback_query.message.chat.id, media=media)
+        with open(f"../media/{i}", 'rb') as video:
+            print(video)
+            await callback_query.bot.send_video(chat_id=callback_query.message.chat.id, video=video)
 
 
 @dp.message_handler(commands=['help'])

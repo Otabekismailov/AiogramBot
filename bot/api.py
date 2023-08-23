@@ -38,4 +38,6 @@ def get_course_video(course_id):
     url = f"{base_url}/course-list/{course_id}/"
     response = requests.get(url)
     response.raise_for_status()
-    return json.loads(response.text)
+    for i in json.loads(response.text):
+        print(i)
+        return [v['video'] for v in i['course_video']]

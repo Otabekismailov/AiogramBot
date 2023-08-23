@@ -1,6 +1,7 @@
 from rest_framework.generics import ListCreateAPIView, ListAPIView
 from apps.models import User, Category, Commit, DjangoCourse
 from rest_framework import generics
+
 from rest_framework.views import APIView
 from apps.serializers import UserSerializers, CategorySerializers, CategoryParentSerializers, CommitSerializers, \
     CourseSerializers
@@ -22,7 +23,10 @@ class CategoryParent(generics.ListAPIView):
 
     def get_queryset(self):
         qs = self.queryset.filter(parent_id=self.kwargs.get("pk"))
-        return qs
+        if qs:
+            return qs
+        else:
+            return None
 
 
 class CommitCreateList(ListCreateAPIView):
@@ -34,4 +38,7 @@ class CourseList(generics.ListAPIView):
     serializer_class = CourseSerializers
 
     def get_queryset(self):
-        return DjangoCourse.objects.filter(category_id=self.kwargs.get("pk"))
+        qs = DjangoCourse.objects.filter(category_id=self.kwargs.get("pk"))
+        if qs:
+            return qs
+        return None

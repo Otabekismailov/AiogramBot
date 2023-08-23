@@ -17,7 +17,7 @@ def inline_category(category):
 
     if category_:
         keyboard_inline.add(
-            InlineKeyboardButton(category_.get("name"), callback_data=f'category_ {category_.get("id")}')
+            InlineKeyboardButton(category_.get("name"), callback_data=f'category_{category_.get("id")}')
         )
     return keyboard_inline
 
